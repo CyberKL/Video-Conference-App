@@ -1,0 +1,17 @@
+{
+  "name": "video-conference-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "open-easyrtc": "^2.0.20",
+    "socket.io": "^2.5.0"
+  }
+}
