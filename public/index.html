@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Conference</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/easyrtc/easyrtc.json"></script>
+    <script defer src="js/index.js"></script>
+</head>
+<body>
+    <h1 id="title">Video Conference App</h1>
+    <div id="roomControls">
+        <form action="" method="post" novalidate onsubmit="createConference(event)">
+            <h3>Create a new Conference</h3>
+            <label for="roomDisplayName">Room Name</label>
+            <input type="text" name="roomDisplayName" id="roomDisplayName" required>
+            <input type="submit" value="Create ">
+        </form>
+        <form action="" method="post" novalidate>
+            <h3>Join an ongoing Conference</h3>
+            <label for="roomId">Room ID</label>
+            <input type="text" name="roomId" id="roomId" required>
+            <label for="roomPass">Room Password</label>
+            <input type="password" name="roomPass" id="roomPass" required>
+            <input type="submit" value="Join">
+        </form>
+    </div>
+</body>
+</html>
