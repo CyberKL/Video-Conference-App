@@ -5,14 +5,64 @@ const io = require('socket.io')
 const easyrtc = require('open-easyrtc')
 
 // Setup and configure Express http server. Expect a subfolder called "static" to be the web root.
-const httpApp = express();
-httpApp.use(express.static(__dirname + "/public/"));
+const app = express();
+app.use(express.static(__dirname + "/public/"));
 
 // Start Express http server on port 8080
-const webServer = http.createServer(httpApp).listen(8080);
+const webServer = http.createServer(app).listen(8080);
 
 // Start Socket.io so it attaches itself to Express server
 const socketServer = io.listen(webServer);
 
 // Start EasyRTC server
-easyrtc.listen(httpApp, socketServer)
+let VideoConferenceApp = null
+easyrtc.listen(
+    app,
+    socketServer,
+    {
+        logLevel:"debug", 
+        logDateEnable:true,
+        appAutoCreateEnable:false,
+        demosEnable:false
+    },
+    function(err, rtc) {
+        rtc.createApp(
+            "VideoConferenceApp",
+            null,
+            function (err, app) {
+                VideoConferenceApp = app
+            }
+        )
+    }
+)
+
+// Create room
+const generateRoomId = () => {
+    return Math.random().toString(36).substr(2, 9);
+};
+
+const generateRoomPass = () => {
+    return Math.random().toString(36).substr(2, 9);
+};
+
+app.post('/create-conference', (req, res) => {
+    const { roomDisplayName } = req.body
+
+    if (!roomDisplayName) {
+        return res.json({ success: false, message: "Room Name is required!" });
+    }
+
+    const roomId = generateRoomId()
+    const roomPass = generateRoomPass()
+
+    // Save the new conference details to a database or in-memory storage if needed
+    roomDetails = {
+        "id": roomId,
+        "name": roomDisplayName,
+        "pass": roomPass
+    }
+
+
+    // Create a new easyrtc room in the app
+    VideoConferenceApp.createRoom(roomId)
+})
