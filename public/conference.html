@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/easyrtc/easyrtc.js"></script>
+    <script defer src="js/conference.js"></script>
+</head>
+<body onload="my_init()">
+    <div id="videos" style="display: flex; gap: 100px;">
+        <video id="self" muted autoplay></video>
+    </div>
+</body>
+</html>

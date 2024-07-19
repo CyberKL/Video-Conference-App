@@ -6,7 +6,7 @@
     <title>Video Conference</title>
     <link rel="stylesheet" href="css/index.css">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/easyrtc/easyrtc.json"></script>
+    <script src="/easyrtc/easyrtc.js"></script>
     <script defer src="js/index.js"></script>
 </head>
 <body>
@@ -18,7 +18,7 @@
             <input type="text" name="roomDisplayName" id="roomDisplayName" required>
             <input type="submit" value="Create ">
         </form>
-        <form action="" method="post" novalidate>
+        <form action="" method="post" novalidate onsubmit="joinConference(event)">
             <h3>Join an ongoing Conference</h3>
             <label for="roomId">Room ID</label>
             <input type="text" name="roomId" id="roomId" required>

@@ -6,7 +6,7 @@ async function createConference(event)
 
     if(roomDisplayName) {
         try {
-            const response = await fetch('/create-room', {
+            const response = await fetch('/create-conference', {
                 "method": 'POST',
                 "headers": {
                     "Content-type": 'application/json'
@@ -14,12 +14,14 @@ async function createConference(event)
                 "body": JSON.stringify({roomDisplayName})
             })
 
-            if(response.redirected) {
-                window.location.href = response.url
+            const result = await response.json();
+
+            if (result.success) {
+                window.location.href = `conference.html?roomDisplayName=${encodeURIComponent(result.roomDisplayName)}&roomId=${encodeURIComponent(result.roomId)}&roomPass=${encodeURIComponent(result.roomPass)}`;
             } else {
-                const result = await response.json();
                 alert(result.message);
             }
+
         } catch (error) {
             console.error('Error: ', error)
         }
@@ -29,3 +31,36 @@ async function createConference(event)
     }
 }
 
+
+async function joinConference(event)
+{
+    event.preventDefault()
+
+    let roomId = document.getElementById('roomId').value
+    let roomPass = document.getElementById('roomPass').value
+
+    if(roomId && roomPass) {
+        try {
+            const response = await fetch('/join-conference', {
+                "method": 'POST',
+                "headers": {
+                    "Content-type": 'application/json'
+                },
+                "body": JSON.stringify({roomId, roomPass})
+            })
+
+            const result = await response.json();
+
+            if (result.success) {
+                window.location.href = `conference.html?roomDisplayName=${encodeURIComponent(result.roomDisplayName)}&roomId=${encodeURIComponent(result.roomId)}&roomPass=${encodeURIComponent(result.roomPass)}`;
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error: ', error)
+        }
+    } else {
+        alert('Please enter a room id and password')
+        return
+    }
+}
