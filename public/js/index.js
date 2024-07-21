@@ -2,7 +2,8 @@ async function createConference(event)
 {
     event.preventDefault()
 
-    let roomDisplayName = document.getElementById('roomDisplayName').value
+    const roomDisplayName = document.getElementById('roomDisplayName').value
+    const userDisplayName = document.getElementById('userDisplayNameC').value
 
     if(roomDisplayName) {
         try {
@@ -17,7 +18,9 @@ async function createConference(event)
             const result = await response.json();
 
             if (result.success) {
-                window.location.href = `conference.html?roomDisplayName=${encodeURIComponent(result.roomDisplayName)}&roomId=${encodeURIComponent(result.roomId)}&roomPass=${encodeURIComponent(result.roomPass)}`;
+                sessionStorage.setItem("roomDisplayName", roomDisplayName)
+                sessionStorage.setItem("userDisplayName", userDisplayName)
+                window.location.href = `conference.html`
             } else {
                 alert(result.message);
             }
@@ -36,8 +39,9 @@ async function joinConference(event)
 {
     event.preventDefault()
 
-    let roomId = document.getElementById('roomId').value
-    let roomPass = document.getElementById('roomPass').value
+    const roomId = document.getElementById('roomId').value
+    const roomPass = document.getElementById('roomPass').value
+    const userDisplayName = document.getElementById('userDisplayNameJ').value
 
     if(roomId && roomPass) {
         try {
@@ -52,7 +56,9 @@ async function joinConference(event)
             const result = await response.json();
 
             if (result.success) {
-                window.location.href = `conference.html?roomDisplayName=${encodeURIComponent(result.roomDisplayName)}&roomId=${encodeURIComponent(result.roomId)}&roomPass=${encodeURIComponent(result.roomPass)}`;
+                sessionStorage.setItem("roomDisplayName", result.roomDisplayName)
+                sessionStorage.setItem("userDisplayName", userDisplayName)
+                window.location.href = `conference.html`
             } else {
                 alert(result.message);
             }

@@ -1,0 +1,70 @@
+body, html {
+    background-color: #555;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: 100%;
+    max-width: 1200px; /* Adjust this value as needed */
+    padding: 20px;
+    box-sizing: border-box;
+}
+.video-container {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    width: 100%;
+}
+.video-wrapper {
+    width: 350px; /* Adjust this value to change video width */
+}
+video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Improve scrollbar appearance */
+.video-container::-webkit-scrollbar {
+    height: 8px;
+}
+.video-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.video-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+.video-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.nametag {
+    position: relative;
+    width: 15%;
+    bottom: 35px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.room-info {
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    z-index: 1000;
+}

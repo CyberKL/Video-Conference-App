@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conference</title>
+    <link rel="stylesheet" href="css/conference.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="/easyrtc/easyrtc.js"></script>
     <script defer src="js/conference.js"></script>
 </head>
 <body onload="my_init()">
-    <div id="videos" style="display: flex; gap: 100px;">
-        <video id="self" muted autoplay></video>
+    <div class="container">
+        <div id="videos" class="video-container">
+            <div class="video-wrapper">
+                <video id="self" muted autoplay></video>
+                <div class="nametag" id="selfNameTag">Me</div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
