@@ -1,5 +1,5 @@
 // Load required modules
-const https = require('http')
+const https = require('https')
 const fs = require('fs')
 const express = require('express')
 const session = require('express-session')
@@ -28,26 +28,30 @@ app.use(helmet.contentSecurityPolicy({
         frameSrc: ["'none'"],
         fontSrc: ["'self'"]
     }
-}));
+}))
+
 // HSTS policy
 app.use(helmet.hsts({
     maxAge: 31536000, // 1 year
     includeSubDomains: true, // Apply to all subdomains
     preload: true // Add to HSTS preload list
-}));
+}))
 app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.xssFilter())
+
 // Custom middleware to set the Permissions-Policy header
 app.use((req, res, next) => {
-    res.setHeader('Permissions-Policy', 'camera=(self), microphone=(self)');
-    next();
+    res.setHeader('Permissions-Policy', 'camera=(self), microphone=(self)')
+
+    next()
 })
+
 app.use(session({
     secret: process.env.SECRET_KEY, // Use a strong secret key
     resave: false,             // Do not save session if unmodified
     saveUninitialized: true,   // Save new sessions
     cookie: {
-        secure: false,          // Use HTTPS to send cookies
+        secure: true,          // Use HTTPS to send cookies
         httpOnly: true,        // Prevent client-side JavaScript access
         sameSite: 'strict'     // CSRF protection
     }
@@ -56,11 +60,11 @@ app.use(session({
 
 
 // Start Express https server on port 8443
-// const options = {
-//     key: fs.readFileSync('certs/server.key'),
-//     cert: fs.readFileSync('certs/server.cert')
-// };
-const webServer = https.createServer(app).listen(8443);
+const options = {
+    key: fs.readFileSync('certs/private.key'),
+    cert: fs.readFileSync('certs/certificate.crt')
+};
+const webServer = https.createServer(options, app).listen(8443);
 
 // Start Socket.io so it attaches itself to Express server
 const socketServer = io.listen(webServer);

@@ -2,8 +2,6 @@ const maxCALLERS = 100
 let pendingCalls = {}; // Track pending calls to avoid duplicate call attempts
 
 function callEverybodyElse(roomName, otherPeople) {
-    console.log('room name', roomName)
-    console.log('other:',otherPeople)
     easyrtc.setRoomOccupantListener(null); // so we're only called once.
 
     const list = [];
